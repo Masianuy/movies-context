@@ -1,23 +1,30 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import WatchHeader from './components/WatchHeader/WatchHeader';
+import WatchMain from './components/WatchMain/WatchMain';
+import WatchSideBar from './components/WatchSideBar/WatchSideBar';
+import { MovieContext } from './context';
+import Data from './data.json';
 
 function App() {
+
+  const [movie, deployMovie] = useState(Data[0]);
+
+  const selectMovie = (item) => {
+    deployMovie(item);
+  }
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='user-card'>
+      <MovieContext.Provider value={{
+        movies: Data,
+        selectMovie: selectMovie,
+        movie: movie,
+        }}>
+        <WatchHeader />
+        <WatchSideBar />
+        <WatchMain />
+      </MovieContext.Provider>
     </div>
   );
 }
